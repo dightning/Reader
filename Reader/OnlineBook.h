@@ -65,6 +65,8 @@ private:
     static unsigned int GetChapterPageCompleter(request_result_t *result);
     static unsigned int GetChaptersCompleter(request_result_t *result);
     static unsigned int GetContentCompleter(request_result_t *result);
+    int m_totalBookChars;  // 全书总字数
+    int m_readChars;       // 已读字数
 
 protected:
     HANDLE m_hEvent;
