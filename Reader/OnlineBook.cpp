@@ -278,6 +278,14 @@ void OnlineBook::JumpChapter(HWND hWnd, int index)
     if (index < 0 || index >= (int)m_Chapters.size())
         return;
 
+        // ==== 新增代码：更新已读字数 ====
+    m_readChars = 0;
+    for (int i = 0; i <= index; i++) {
+        if (m_Chapters[i].size > 0) {
+            m_readChars += m_Chapters[i].size;
+        }
+    }
+
     if (m_Chapters[index].index == -1)
     {
         m_TagetIndex = index;
@@ -1581,6 +1589,11 @@ unsigned int OnlineBook::GetChaptersCompleter(request_result_t *result)
             item.title_len = dstlen;
             chapters.chapters.push_back(item);
         }
+        // ==== 新增代码：初始化全书总字数 ====
+_this->m_totalBookChars = 0;
+for (auto& chap : _this->m_Chapters) {
+    _this->m_totalBookChars += chap.size;
+}
     }
     _this->m_UpdateTime = time(NULL);
     SendMessage(param->hWnd, WM_BOOK_EVENT, BE_UPATE_CHAPTER, (LPARAM)&chapters);
